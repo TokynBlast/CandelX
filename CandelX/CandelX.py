@@ -120,7 +120,7 @@ class TextEditor(ttk.Frame):
 
     def load_template(self, filepath):
         if os.path.exists(filepath):
-            with open(filepath, "r") as file:
+            with open(filepath, "r", encoding="utf8") as file:
                 self.text.delete("1.0", "end")
                 self.text.insert("1.0", file.read())
         else:
