@@ -292,16 +292,16 @@ class TextEditor(ttk.Frame):
         end = simpledialog.askstring("Set Date Range", "Enter end date (MM/DD/YYYY):")
         if start and end:
             try:
-                start = datetime.strptime(start_date, "%m/%d/%Y")
-                end = datetime.strptime(end_date, "%m/%d/%Y")
+                start = datetime.strptime(start, "%m/%d/%Y")
+                end = datetime.strptime(end, "%m/%d/%Y")
                 if start > end:
                     raise ValueError("Start date must be earlier than end date")
                 days_since_1250 = (end.date() - datetime(1250, 1, 1).date()).days
                 if days_since_1250 < 0:
                     raise ValueError("The year cannot be earlier than 1250.")
                 random_days = random.randint(0, days_since_1250)
-                random_date = end_date - timedelta(days=random_days)
-                self.text.insert("insert", random_date.strftime("%B %d, %Y"))
+                gen_date = end_date - timedelta(days=random_days)
+                self.text.insert("insert", gen_date.strftime("%m %d, %Y"))
             except ValueError as e:
                 messagebox.showerror("Error", str(e))
 
