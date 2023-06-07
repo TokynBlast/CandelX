@@ -247,7 +247,7 @@ class TextEditor(ttk.Frame):
             self.text.insert("insert", middle_name)
 
     def coding_task(self):
-        with open("generate/codin.task", "r") as file:
+        with open("generate/coding.task", "r") as file:
             coding_task = file.read().splitlines()
             coding_task = random.choice(coding_task)
             self.text.insert("insert", coding_task)
@@ -259,13 +259,13 @@ class TextEditor(ttk.Frame):
             self.text.insert("insert", coding_task)
 
     def cleaning_task(self):
-        with open("info/generate/codin.task", "r") as file:
+        with open("info/generate/cleaning.task", "r") as file:
             coding_task = file.read().splitlines()
             coding_task = random.choice(coding_task)
             self.text.insert("insert", coding_task)
 
     def gaming_task(self):
-        with open("info/generate/codin.task", "r") as file:
+        with open("info/generate/gaming.task", "r") as file:
             coding_task = file.read().splitlines()
             coding_task = random.choice(coding_task)
             self.text.insert("insert", coding_task)
