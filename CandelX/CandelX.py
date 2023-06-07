@@ -28,7 +28,7 @@ class TextEditor(ttk.Frame):
         file_menu = tk.Menu(self.menu_bar, tearoff=False)
         file_menu.add_command(label="Open", command=self.open_file, accelerator="Ctrl+O")
         file_menu.add_command(label="Save", command=self.save_file, accelerator="Ctrl+S")
-        file_menu.add_command(label="Save As...", command=self.save_file_as, accelerator="Ctrl+S")
+        file_menu.add_command(label="Save As", command=self.save_as, accelerator="Ctrl+S")
         file_menu.add_separator()
         file_menu.add_command(label="Clear", command=self.clear, accelerator="Ctrl+R")
         file_menu.add_command(label="Exit", command=self.quit)
@@ -47,65 +47,66 @@ class TextEditor(ttk.Frame):
         generate_menu = tk.Menu(self.menu_bar, tearoff=False)
 
         # Time section
-        time_menu = tk.Menu(generate_menu, tearoff=False)
-        time_menu.add_command(label="Random Date", command=self.random_date)
-        time_menu.add_command(label="Random Time", command=self.random_time)
-        time_menu.add_command(label="Date In Range", command=self.set_date_range)
-        time_menu.add_command(label="Current Time", command=self.current_time)
-        time_menu.add_command(label="Current Date", command=self.current_date)
+        time = tk.Menu(generate_menu, tearoff=False)
+        time.add_command(label="Random Time", command=self.gen_time)
+        time.add_command(label="Current Time", command=self.current_time)
+        time.add_separator()
+        time.add_command(label="Random Date", command=self.gen_date)
+        time.add_command(label="Date In Range", command=self.set_date_range)
+        time.add_command(label="Current Date", command=self.current_date)
 
         # Name section
-        name_menu = tk.Menu(generate_menu, tearoff=False)
-        name_menu.add_command(label="First Name", command=self.first_name)
-        name_menu.add_command(label="Middle Name", command=self.middle_name)
-        name_menu.add_command(label="Last Name", command=self.last_name)
-        name_menu.add_command(label="Full Name", command=self.full_name)
+        name = tk.Menu(generate_menu, tearoff=False)
+        name.add_command(label="First Name", command=self.first_name)
+        name.add_command(label="Middle Name", command=self.middle_name)
+        name.add_command(label="Last Name", command=self.last_name)
+        name.add_command(label="Full Name", command=self.full_name)
 
         # Number section
-        number_menu = tk.Menu(generate_menu, tearoff=False)
-        number_menu.add_command(label="Generate Number", command=self.random_number)
-        number_menu.add_command(label="Number Range", command=self.number_range)
+        number = tk.Menu(generate_menu, tearoff=False)
+        number.add_command(label="Generate Number", command=self.random_number)
+        number.add_command(label="Number Range", command=self.number_range)
 
         # Task Section
-        task_menu = tk.Menu(generate_menu, tearoff=False)
-        task_menu.add_command(label="Cleaning Task", command=self.cleaning_task)
-        task_menu.add_command(label="Gaming Task", command=self.gaming_task)
-        task_menu.add_command(label="Vlog Task", command=self.vlog_task)
-        task_menu.add_command(label="Coding Task", command=self.coding_task)
+        task = tk.Menu(generate_menu, tearoff=False)
+        task.add_command(label="Cleaning Task", command=self.cleaning_task)
+        task.add_command(label="Gaming Task", command=self.gaming_task)
+        task.add_command(label="Vlog Task", command=self.vlog_task)
+        task.add_command(label="Coding Task", command=self.coding_task)
 
-        generate_menu.add_cascade(label="Time", menu=time_menu)
-        generate_menu.add_cascade(label="Name", menu=name_menu)
-        generate_menu.add_cascade(label="Number", menu=number_menu)
-        generate_menu.add_cascade(label="Task", menu=number_menu)
+        generate.add_cascade(label="Time", menu=time_menu)
+        generate.add_cascade(label="Name", menu=name_menu)
+        generate.add_cascade(label="Number", menu=number_menu)
+        generate.add_cascade(label="Task", menu=number_menu)
 
         self.menu_bar.add_cascade(label="Generate", menu=generate_menu)
 
         # Templates menu
-        template_menu = tk.Menu(self.menu_bar, tearoff=False)
+        template = tk.Menu(self.menu_bar, tearoff=False)
 
-        backrooms_submenu = tk.Menu(template_menu, tearoff=False)
-        backrooms_submenu.add_command(label="Object", command=lambda: self.load_template("temps/object.temp"))
-        backrooms_submenu.add_command(label="Level", command=lambda: self.load_template("temps/level.temp"))
-        backrooms_submenu.add_command(label="Entity", command=lambda: self.load_template("temps/entity.temp"))
-        backrooms_submenu.add_command(label="Phenomena", command=lambda: self.load_template("temps/phenomena.temp"))
-        backrooms_submenu.add_command(label="Group", command=lambda: self.load_template("temps/group.temp"))
+        backrooms = tk.Menu(template_menu, tearoff=False)
+        backrooms.add_command(label="Object", command=lambda: self.load_template("temps/object.temp"))
+        backrooms.add_command(label="Level", command=lambda: self.load_template("temps/level.temp"))
+        backrooms.add_command(label="Entity", command=lambda: self.load_template("temps/entity.temp"))
+        backrooms.add_command(label="Phenomena", command=lambda: self.load_template("temps/phenomena.temp"))
+        backrooms.add_command(label="Group", command=lambda: self.load_template("temps/group.temp"))
 
-        legal_submenu = tk.Menu(template_menu, tearoff=False)
-        legal_submenu.add_command(label="Cleaning Services Agreement", command=lambda: self.load_template("temps/cleaning services agreement.temp"))
-        legal_submenu.add_command(label="Website Privacy Policy", command=lambda: self.load_template("temps/website privacy policy.temp"))
-        legal_submenu.add_command(label="Resume", command=lambda: self.load_template("temps/resume.temp"))
-        legal_submenu.add_command(label="Contract", command=lambda: self.load_template("temps/contract.temp"))
-        legal_submenu.add_command(label="NDA", command=lambda: self.load_template("temps/nda.temp"))
-        legal_submenu.add_command(label="Employment Agreement", command=lambda: self.load_template("temps/empoyment agreement.temp"))
+        legal = tk.Menu(template_menu, tearoff=False)
+        legal.add_command(label="Cleaning Services Agreement", command=lambda: self.load_template("temps/cleaning services agreement.temp"))
+        legal.add_command(label="Website Privacy Policy", command=lambda: self.load_template("temps/website privacy policy.temp"))
+        legal.add_command(label="Resume", command=lambda: self.load_template("temps/resume.temp"))
+        legal.add_command(label="Contract", command=lambda: self.load_template("temps/contract.temp"))
+        legal.add_command(label="NDA", command=lambda: self.load_template("temps/nda.temp"))
+        legal.add_command(label="Employment Agreement", command=lambda: self.load_template("temps/empoyment agreement.temp"))
 
-        misc_submenu = tk.Menu(template_menu, tearoff=False)
-        misc_submenu.add_command(label="Shopping List", command=lambda: self.load_template("temps/shopping list.temp"))
+        misc = tk.Menu(template_menu, tearoff=False)
+        misc.add_command(label="Shopping List", command=lambda: self.load_template("temps/shopping list.temp"))
 
-        template_menu.add_cascade(label="Backrooms", menu=backrooms_submenu)
-        template_menu.add_cascade(label="Legal", menu=legal_submenu)
-        template_menu.add_cascade(label="Miscelanious", menu=misc_submenu)
+        template.add_cascade(label="Backrooms", menu=backrooms)
+        template.add_cascade(label="Legal", menu=legal)
+        template.add_cascade(label="Miscelanious", menu=misc)
 
-        self.menu_bar.add_cascade(label="Templates", menu=template_menu)
+        self.menu_bar.add_cascade(label="Templates", menu=template)
 
     def clear(self):
         self.text.delete("1.0", "end")
@@ -144,7 +145,7 @@ class TextEditor(ttk.Frame):
         else:
             self.save_file_as()
 
-    def save_file_as(self, event=None):
+    def save_as(self, event=None):
         filepath = filedialog.asksaveasfilename()
         if filepath:
             with open(filepath, "w") as f:
@@ -189,7 +190,7 @@ class TextEditor(ttk.Frame):
     def redo(self, event=None):
         self.text.edit_redo()
 
-    def random_date(self):
+    def gen_date(self):
         start_date = simpledialog.askstring("Set Date Range", "Enter start date (MM/DD/YYYY):")
         end_date = simpledialog.askstring("Set Date Range", "Enter end date (MM/DD/YYYY):")
         if start_date and end_date:
@@ -208,7 +209,7 @@ class TextEditor(ttk.Frame):
             self.text.insert("insert", random_date.strftime("%B %d, %Y"))
             print(f"Generated date: {random_date.strftime('%B %d, %Y')}")
 
-    def random_time(self):
+    def gen_time(self):
         random_time = f"{random.randint(1, 12):02d}:{random.randint(0, 59):02d}"
         self.text.insert("insert", random_time)
 
@@ -270,7 +271,7 @@ class TextEditor(ttk.Frame):
             coding_task = random.choice(coding_task)
             self.text.insert("insert", coding_task)
 
-    def random_number(self):
+    def gen_number(self):
         random_num = random.randint
         self.text.insert(tk.INSERT, str(random_num))
 
