@@ -172,13 +172,13 @@ class TextEditor(ttk.Frame):
     def replace_text(self):
         query = simpledialog.askstring("Replace", "Enter text to replace:")
         if query:
-            replace_with = simpledialog.askstring("Replace", "Replace with:")
-            if replace_with:
+            replace = simpledialog.askstring("Replace", "Replace with:")
+            if replace:
                 idx = self.text.search(query, "1.0", tk.END)
                 if idx:
                     answer = messagebox.askyesno(
                         "Replace",
-                        f"Replace '{query}' with '{replace_with}'?"
+                        f"Replace '{query}' with '{replace}'?"
                     )
                     if answer:
                         while idx:
