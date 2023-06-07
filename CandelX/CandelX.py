@@ -6,13 +6,13 @@ from datetime import datetime, timedelta
 import string
 
 root = tk.Tk()
-root.title("CandelX Documentor")
+root.title("CandelX Text Editor")
 
 class TextEditor(ttk.Frame):
     def __init__(self, master):
         super().__init__(master)
         self.master = master
-        self.master.title("CandelX Documentor")
+        self.master.title("CandelX Text Editor")
         self.create_widgets()
 
     def create_widgets(self):
@@ -28,7 +28,7 @@ class TextEditor(ttk.Frame):
         file_menu = tk.Menu(self.menu_bar, tearoff=False)
         file_menu.add_command(label="Open", command=self.open_file, accelerator="Ctrl+O")
         file_menu.add_command(label="Save", command=self.save_file, accelerator="Ctrl+S")
-        file_menu.add_command(label="Save As...", command=self.save_file_as, accelerator="Ctrl+Shift+S")
+        file_menu.add_command(label="Save As...", command=self.save_file_as, accelerator="Ctrl+S")
         file_menu.add_separator()
         file_menu.add_command(label="Clear", command=self.clear, accelerator="Ctrl+R")
         file_menu.add_command(label="Exit", command=self.quit)
@@ -48,8 +48,8 @@ class TextEditor(ttk.Frame):
 
         # Time section
         time_menu = tk.Menu(generate_menu, tearoff=False)
-        time_menu.add_command(label="Random Date", command=self.generate_random_date)
-        time_menu.add_command(label="Random Time", command=self.generate_random_time)
+        time_menu.add_command(label="Random Date", command=self.random_date)
+        time_menu.add_command(label="Random Time", command=self.random_time)
         time_menu.add_command(label="Date In Range", command=self.set_date_range)
         time_menu.add_command(label="Current Time", command=self.current_time)
         time_menu.add_command(label="Current Date", command=self.current_date)
@@ -189,7 +189,7 @@ class TextEditor(ttk.Frame):
     def redo(self, event=None):
         self.text.edit_redo()
 
-    def generate_random_date(self):
+    def random_date(self):
         start_date = simpledialog.askstring("Set Date Range", "Enter start date (MM/DD/YYYY):")
         end_date = simpledialog.askstring("Set Date Range", "Enter end date (MM/DD/YYYY):")
         if start_date and end_date:
@@ -208,7 +208,7 @@ class TextEditor(ttk.Frame):
             self.text.insert("insert", random_date.strftime("%B %d, %Y"))
             print(f"Generated date: {random_date.strftime('%B %d, %Y')}")
 
-    def generate_random_time(self):
+    def random_time(self):
         random_time = f"{random.randint(1, 12):02d}:{random.randint(0, 59):02d}"
         self.text.insert("insert", random_time)
 
@@ -283,7 +283,7 @@ class TextEditor(ttk.Frame):
         else:
             messagebox.showerror("Error", "Invalid range supplied.")
 
-    def set_date_range(self):
+    def date_range(self):
         start = simpledialog.askstring("Set Date Range", "Enter start date (MM/DD/YYYY):")
         end = simpledialog.askstring("Set Date Range", "Enter end date (MM/DD/YYYY):")
         if start and end:
