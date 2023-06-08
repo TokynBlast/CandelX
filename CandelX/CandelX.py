@@ -4,9 +4,14 @@ import os
 import random
 from datetime import datetime, timedelta
 import string
+from PIL import Image, ImageTk
 
 root = tk.Tk()
 root.title("CandelX Text Editor")
+
+icon_image = Image.open("icon.ico")
+icon_photo = ImageTk.PhotoImage(icon_image)
+root.iconphoto(False, icon_photo)
 
 class TextEditor(ttk.Frame):
     def __init__(self, master):
@@ -125,7 +130,7 @@ class TextEditor(ttk.Frame):
 
     def load_template(self, filepath):
         if os.path.exists(filepath):
-            with open(filepath, "r") as file:
+            with open(filepath, "r", encoding="utf8") as file:
                 self.text.delete("1.0", "end")
                 self.text.insert("1.0", file.read())
         else:
@@ -172,13 +177,13 @@ class TextEditor(ttk.Frame):
     def replace_text(self):
         query = simpledialog.askstring("Replace", "Enter text to replace:")
         if query:
-            replace = simpledialog.askstring("Replace", "Replace with:")
-            if replace:
+            replace_with = simpledialog.askstring("Replace", "Replace with:")
+            if replace_with:
                 idx = self.text.search(query, "1.0", tk.END)
                 if idx:
                     answer = messagebox.askyesno(
                         "Replace",
-                        f"Replace '{query}' with '{replace}'?"
+                        f"Replace '{query}' with '{replace_with}'?"
                     )
                     if answer:
                         while idx:
@@ -219,17 +224,17 @@ class TextEditor(ttk.Frame):
     def full_name(self):
         with open("info/generate/first.name", "r") as file:
             first_names = file.read().splitlines()
-            first_name = random.choice(first_names)
+            first = random.choice(first_names)
 
         with open("info/generate/middle.name", "r") as file:
             middle_names = file.read().splitlines()
-            middle_name = random.choice(middle_names)
+            middle = random.choice(middle_names)
 
         with open("info/generate/last.name", "r") as file:
             last_names = file.read().splitlines()
-            last_name = random.choice(last_names)
+            last = random.choice(last_names)
 
-        random_name = f"{first_name} {middle_name} {last_name}."
+        random_name = f"{first} {middle} {last}."
         self.text.insert("insert", random_name)
 
     def first_name(self):
@@ -238,17 +243,17 @@ class TextEditor(ttk.Frame):
             first_name = random.choice(first_names)
             self.text.insert("insert", first_name)
 
-    def last_name(self):
-        with open("info/generate/last.name", "r") as file:
-            last_name = file.read().splitlines()
-            last_name = random.choice(last_name)
-            self.text.insert("insert", last_name)
-
     def middle_name(self):
         with open("generate/middle.name", "r") as file:
             middle_name = file.read().splitlines()
             middle_name = random.choice(middle_name)
             self.text.insert("insert", middle_name)
+
+    def last_name(self):
+        with open("info/generate/last.name", "r") as file:
+            last_name = file.read().splitlines()
+            last_name = random.choice(last_name)
+            self.text.insert("insert", last_name)
 
     def code_task(self):
         with open("generate/coding.task", "r") as file:
@@ -289,19 +294,20 @@ class TextEditor(ttk.Frame):
 
     def date_range(self):
         start = simpledialog.askstring("Set Date Range", "Enter start date (MM/DD/YYYY):")
-        end = simpledialog.askstring("Set Date Range", "Enter end date (MM/DD/YYYY):")
-        if start and end:
+        if start:
             try:
                 start = datetime.strptime(start, "%m/%d/%Y")
-                end = datetime.strptime(end, "%m/%d/%Y")
-                if start > end:
-                    raise ValueError("Start date must be earlier than end date")
-                days_since_1250 = (end.date() - datetime(1250, 1, 1).date()).days
-                if days_since_1250 < 0:
-                    raise ValueError("The year cannot be earlier than 1250.")
-                random_days = random.randint(0, days_since_1250)
-                gen_date = end_date - timedelta(days=random_days)
-                self.text.insert("insert", gen_date.strftime("%m %d, %Y"))
+                end = simpledialog.askstring("Set Date Range", "Enter end date (MM/DD/YYYY):")
+                if end:
+                    end = datetime.strptime(end, "%m/%d/%Y")
+                    if start > end:
+                        raise ValueError("Start date must be earlier than end date")
+                    delta = (end - start).days
+                    random_days = random.randint(0, delta)
+                    gen_date = end - timedelta(days=random_days)
+                    self.text.insert("insert", gen_date.strftime("%B %d, %Y"))
+                else:
+                    messagebox.showerror("Error", "End date is required")
             except ValueError as e:
                 messagebox.showerror("Error", str(e))
 
