@@ -82,7 +82,7 @@ class TextEditor(ttk.Frame):
         generate_menu.add_cascade(label="Time", menu=time)
         generate_menu.add_cascade(label="Name", menu=name)
         generate_menu.add_cascade(label="Number", menu=number)
-        generate_menu.add_cascade(label="Task", menu=number)
+        generate_menu.add_cascade(label="Task", menu=task)
 
         self.menu_bar.add_cascade(label="Generate", menu=generate_menu)
 
